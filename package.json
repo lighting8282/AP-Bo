@@ -1,0 +1,13 @@
+{
+  "name": "ap-skipbo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Browser client for Skip-Bo for Archipelago",
+  "homepage": "https://lighting8282.github.io/Skip_Bo-Implementation/",
+  "type": "module",
+  "scripts": {
+    "test": "python tools/stamp_build.py --check && node docs/test/crosscheck.mjs && node docs/test/session_test.mjs",
+    "fixtures": "python tools/export_traces.py && python tools/export_session_fixtures.py",
+    "serve": "python tools/serve_docs.py 8790"
+  }
+}

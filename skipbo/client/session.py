@@ -33,8 +33,12 @@ HUMAN = 0
 GOAL_TABLE_TEN, GOAL_ALL_TABLES, GOAL_GAMES_WON = 0, 1, 2
 
 
+def _is_int(value) -> bool:
+    return isinstance(value, int) and not isinstance(value, bool)
+
+
 def _tables(values) -> set[int]:
-    return {int(t) for t in values if 1 <= int(t) <= TABLE_COUNT}
+    return {t for t in values if _is_int(t) and 1 <= t <= TABLE_COUNT}
 
 
 @dataclass
@@ -70,8 +74,16 @@ class Stats:
         try:
             if not isinstance(data, dict) or data.get("version") != PAYLOAD_VERSION:
                 return None
-            ints = {k: int(data[k]) for k in ("games_played", "games_won", "stock_played", "piles")}
-            if min(ints.values()) < 0:
+            # Strict, and the same rules as docs/src/session.js: a save is
+            # untrusted, and both clients must refuse the same ones.
+            ints = {k: data[k] for k in ("games_played", "games_won", "stock_played", "piles")}
+            if any(not _is_int(v) or v < 0 for v in ints.values()):
+                return None
+            for key in ("traps_used", "fillers_used"):
+                if not isinstance(data[key], dict) or not all(map(_is_int, data[key].values())):
+                    return None
+            lists = ("tables_won", "bought", "tables_dominant", "tables_piled", "history")
+            if any(not isinstance(data.get(k, []), list) for k in lists):
                 return None
             return cls(
                 **ints,
@@ -80,7 +92,7 @@ class Stats:
                 tables_piled=_tables(data.get("tables_piled", [])),
                 traps_used={str(k): int(v) for k, v in dict(data["traps_used"]).items()},
                 fillers_used={str(k): int(v) for k, v in dict(data["fillers_used"]).items()},
-                bought={int(s) for s in data["bought"]},
+                bought={b for b in data["bought"] if _is_int(b)},
                 history=[h for h in data.get("history", []) if isinstance(h, dict)][-50:],
             )
         except (KeyError, TypeError, ValueError):

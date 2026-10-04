@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1720">
+<meta name="description" content="Skip-Bo for Archipelago, in the browser. Connect to a multiworld room or just play.">
+<title>AP Skip-Bo</title>
+<link rel="icon" href="assets/cards/wild.png">
+<link rel="stylesheet" href="style.css?v=040ed05b">
+</head>
+<body>
+<header>
+  <div class="bar">
+    <h1>AP Skip-Bo</h1>
+    <span id="status" role="status">not connected</span>
+    <button type="button" id="edit-connection" class="small" hidden>Change</button>
+  </div>
+  <form id="connect" autocomplete="off">
+    <input id="url" value="archipelago.gg:38281" aria-label="Server address" inputmode="url">
+    <input id="slot" placeholder="Slot name" aria-label="Slot name">
+    <input id="password" type="password" placeholder="Password" aria-label="Password">
+    <button type="submit" id="connect-button">Connect</button>
+    <span class="or">or <button type="button" id="free-play">Just play</button></span>
+  </form>
+</header>
+
+<main>
+  <section id="game" aria-label="Table">
+    <div id="summary"></div>
+    <div id="opponents" class="opponents"></div>
+
+    <h2>Build piles <small id="pile-info"></small></h2>
+    <div id="builds" class="row builds"></div>
+
+    <h2>Your stockpile &amp; discard piles</h2>
+    <div id="mine" class="row mine"></div>
+
+    <h2>Your hand <small>tap to select, tap again to auto-place</small></h2>
+    <div id="hand" class="row hand"></div>
+
+    <p id="prompt" aria-live="polite"></p>
+
+    <div id="actions" class="actions">
+      <button type="button" data-act="hint" title="H">Hint</button>
+      <button type="button" data-act="undo" title="U / Ctrl+Z">Undo</button>
+      <button type="button" data-act="auto" title="A">Auto turn</button>
+      <button type="button" data-act="autogame">Auto game</button>
+      <button type="button" data-act="mulligan">Mulligan</button>
+      <button type="button" data-act="wild">Spare Wild</button>
+      <button type="button" data-act="autostock" aria-pressed="false">Auto-stock</button>
+      <button type="button" data-act="forfeit">Forfeit</button>
+    </div>
+
+    <h2>Tables <small>P pile · W won · D dominant</small></h2>
+    <div id="tables" class="tables"></div>
+    <div id="store" class="store"></div>
+
+    <div class="prefs">
+      <label>Opponent speed
+        <select id="speed">
+          <option value="0">Instant</option>
+          <option value="350" selected>Normal</option>
+          <option value="800">Slow</option>
+        </select>
+      </label>
+      <button type="button" id="new-run" class="small" hidden>Reset free-play stats</button>
+    </div>
+  </section>
+
+  <aside id="side">
+    <details id="log-wrap" open>
+      <summary>Log <small>your table and the rest of the room</small></summary>
+      <div id="log" class="log" aria-live="polite"></div>
+      <form id="say" autocomplete="off" hidden>
+        <input id="say-text" placeholder="Chat or !command" aria-label="Message the room">
+        <button type="submit" class="small">Send</button>
+      </form>
+    </details>
+    <details id="help">
+      <summary>How to play</summary>
+      <p>Build piles go 1 to 12; a wild (W) counts as whatever is needed. Play from your hand,
+        the top of your discard piles, or your stockpile. Empty your stockpile first to win.</p>
+      <p>Tap a card to select it; the piles it fits glow green. Tap one to play it, or tap
+        the selected card again to send it to the first pile that fits. To end your turn,
+        select a hand card and tap one of your discard piles.</p>
+      <p>Keys: 1-9 hand · S stockpile · H hint · U undo · A auto turn · Esc deselect.</p>
+    </details>
+  </aside>
+</main>
+
+<script type="module" src="src/ui.js?v=040ed05b"></script>
+</body>
+</html>

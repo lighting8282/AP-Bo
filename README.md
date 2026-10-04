@@ -1,5 +1,9 @@
 # AP_SkipBo
 
+**Play in the browser: https://lighting8282.github.io/Skip_Bo-Implementation/** (works on phones).
+Connect to your Archipelago room, or press *Just play* to play without one.
+The desktop client and the web page share the same save, so you can switch between them on one slot.
+
 Skip-Bo as an Archipelago game, built the same way as AP Phase 10: the game is pure
 Python that lives inside the apworld, and the client is a CommonClient with an
 added Kivy tab.
@@ -9,6 +13,8 @@ added Kivy tab.
 - `skipbo/client/`: `session.py` maps items to game settings and results to checks
   (no networking, so it can be tested); `context.py` holds the commands and the AP
   connection; `game_manager.py` is the GUI tab
+- `docs/`: the web client (GitHub Pages). `docs/src/` is a JavaScript port of the
+  engine, AI and session, tested against Python-recorded games
 - `skipbo/client/assets/cards/`: Phase 10's generated card art, recoloured by
   band (1-4 blue, 5-8 green, 9-12 red)
 
