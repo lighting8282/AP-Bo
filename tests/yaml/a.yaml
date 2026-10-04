@@ -1,0 +1,7 @@
+name: SkipBo1
+game: AP_SkipBo
+AP_SkipBo:
+  goal: table_ten
+  checks_per_table: 3
+  trap_chance: 30
+  death_link: false

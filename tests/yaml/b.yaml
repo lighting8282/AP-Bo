@@ -1,0 +1,11 @@
+name: SkipBo2
+game: AP_SkipBo
+AP_SkipBo:
+  goal: games_won
+  checks_per_table: 1
+  starting_tables: 1
+  discard_pile_items: 0
+  hand_size_items: 0
+  skipbo_card_items: 0
+  stock_shrink_items: 0
+  store_slots: 8
