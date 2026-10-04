@@ -12,21 +12,6 @@ added Kivy tab.
 - `skipbo/client/assets/cards/`: Phase 10's generated card art, recoloured by
   band (1-4 blue, 5-8 green, 9-12 red)
 
-## Dev
-
-The world is junctioned into the AP source checkout at `C:\Users\turtl\Archipelago\worlds\skipbo`.
-
-    # world + session tests (from the AP checkout)
-    SKIP_REQUIREMENTS_UPDATE=1 .venv/Scripts/python.exe -m unittest discover -s worlds/skipbo/test -t . -p "test_*.py"
-    # GUI click-through + screenshot
-    .venv/Scripts/python.exe "A:/Archipelago/Games/Skip-Bo/tests/ui_check.py" out.png
-    # live: host a seed, then
-    .venv/Scripts/python.exe tests/live_check.py ws://localhost:38281 SkipBo1
-    # package
-    python tools/build_apworld.py   # -> dist/skipbo.apworld
-    # re-measure table difficulty
-    python tools/measure_tables.py
-
 ## GUI controls
 
 Click a table to start. Click a source (a hand card, your stockpile, or a discard
