@@ -183,3 +183,7 @@ Both the desktop client and the web client have these.
 ### Keyboard
 
 1-9 select hand cards, S the stockpile, H hint, U or Ctrl+Z undo, A auto turn, Esc deselect.
+
+---
+
+Skip-Bo is a trademark of Mattel. This is an unofficial fan project, not affiliated with or endorsed by Mattel.
