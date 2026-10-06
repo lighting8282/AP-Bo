@@ -180,21 +180,6 @@ Both the desktop client and the web client have these.
 - Your stats are saved on the Archipelago server, so they carry over between sessions and
   between the desktop and web clients.
 
-### Commands (desktop client console)
-
-`/tables`, `/play <n>`, `/p <source> <pile>` (source: `h1`-`h7` for a hand card, `s` for the
-stockpile, `d1`-`d4` for a discard pile), `/discard <hand> <pile>`, `/hint`, `/undo`, `/auto`,
-`/autogame`, `/autostock`, `/mulligan`, `/wild`, `/forfeit`, `/status`, `/store`, `/buy <n>`.
-
 ### Keyboard
 
 1-9 select hand cards, S the stockpile, H hint, U or Ctrl+Z undo, A auto turn, Esc deselect.
-
-## Known caveats
-
-- **Difficulty is untested by humans.** The logic and difficulty numbers come from the
-  computer playing your seat, so hard tables may feel different to a human player.
-- **Stuck games end with no winner.** A game that cannot progress is called after 600 turns,
-  and it counts as a loss.
-- **The name:** Skip-Bo is a Mattel trademark. This is an unofficial fan project, not
-  affiliated with or endorsed by Mattel.

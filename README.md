@@ -180,35 +180,6 @@ Both the desktop client and the web client have these.
 - Your stats are saved on the Archipelago server, so they carry over between sessions and
   between the desktop and web clients.
 
-### Commands (desktop client console)
-
-`/tables`, `/play <n>`, `/p <source> <pile>` (source: `h1`-`h7` for a hand card, `s` for the
-stockpile, `d1`-`d4` for a discard pile), `/discard <hand> <pile>`, `/hint`, `/undo`, `/auto`,
-`/autogame`, `/autostock`, `/mulligan`, `/wild`, `/forfeit`, `/status`, `/store`, `/buy <n>`.
-
 ### Keyboard
 
 1-9 select hand cards, S the stockpile, H hint, U or Ctrl+Z undo, A auto turn, Esc deselect.
-
-## Known caveats
-
-- **Difficulty is untested by humans.** The logic and difficulty numbers come from the
-  computer playing your seat, so hard tables may feel different to a human player.
-- **Stuck games end with no winner.** A game that cannot progress is called after 600 turns,
-  and it counts as a loss.
-- **The name:** Skip-Bo is a Mattel trademark. This is an unofficial fan project, not
-  affiliated with or endorsed by Mattel.
-
-## Repository layout
-
-Built the same way as AP Phase 10: the game is pure Python inside the apworld, and the
-desktop client is a CommonClient with an added Kivy tab.
-
-- `skipbo/game/`: the rules engine (`engine.py`), the computer players and the hint/auto
-  planner (`ai.py`), and the ten tables (`tables.py`, with measured win rates)
-- `skipbo/client/`: `session.py` maps items to game settings and results to checks;
-  `context.py` holds the commands and the Archipelago connection; `game_manager.py` is the tab
-- `docs/`: the web client (GitHub Pages). `docs/src/` is a JavaScript port of the engine,
-  AI and session, tested against Python-recorded games
-- `skipbo/client/assets/cards/`: Phase 10's generated card art, recoloured by band
-  (1-4 blue, 5-8 green, 9-12 red)
