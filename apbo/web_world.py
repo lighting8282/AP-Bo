@@ -5,7 +5,7 @@ from .data import GAME_NAME
 from .options import option_groups, option_presets
 
 
-class SkipBoWebWorld(WebWorld):
+class BoWebWorld(WebWorld):
     game = GAME_NAME
     theme = "partyTime"
     setup_en = Tutorial(

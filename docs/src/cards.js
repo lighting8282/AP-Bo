@@ -1,4 +1,4 @@
-// Card model. Mirrors skipbo/game/cards.py: a card is a number, 1-12, or
+// Card model. Mirrors apbo/game/cards.py: a card is a number, 1-12, or
 // WILD (0). Careful: WILD is falsy, so test for null, never for truthiness.
 
 export const WILD = 0;

@@ -11,18 +11,18 @@ from .data import (
 )
 
 if TYPE_CHECKING:
-    from .world import SkipBoWorld
+    from .world import BoWorld
 
 
-class SkipBoLocation(Location):
+class BoLocation(Location):
     game = GAME_NAME
 
 
 def _add(region, names: list[str]) -> None:
-    region.add_locations({n: LOCATION_NAME_TO_ID[n] for n in names}, SkipBoLocation)
+    region.add_locations({n: LOCATION_NAME_TO_ID[n] for n in names}, BoLocation)
 
 
-def create_all_locations(world: SkipBoWorld) -> None:
+def create_all_locations(world: BoWorld) -> None:
     _add(world.get_region("Lobby"), MILESTONE_NAMES)
 
     slots = int(world.options.store_slots)
@@ -35,7 +35,7 @@ def create_all_locations(world: SkipBoWorld) -> None:
         # Winning is an event, so the goal can depend on it whatever the
         # checks_per_table prefix left out.
         region.add_event(f"Table {t} Won (event)", f"Table {t} Win",
-                         location_type=SkipBoLocation, item_type=items.SkipBoItem)
+                         location_type=BoLocation, item_type=items.BoItem)
 
     world.get_region("Victory").add_event(
-        "Goal", "Victory", location_type=SkipBoLocation, item_type=items.SkipBoItem)
+        "Goal", "Victory", location_type=BoLocation, item_type=items.BoItem)

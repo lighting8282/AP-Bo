@@ -1,16 +1,16 @@
-// Names, IDs and tables shared with the Python world. Mirrors skipbo/data.py
-// and skipbo/game/tables.py; docs/test/tables_test.mjs fails if they drift.
+// Names, IDs and tables shared with the Python world. Mirrors apbo/data.py
+// and apbo/game/tables.py; docs/test/tables_test.mjs fails if they drift.
 
-export const GAME_NAME = "AP_SkipBo";
+export const GAME_NAME = "AP_Bo";
 export const TABLE_COUNT = 10;
 
 export const tableUnlock = (t) => `Table ${t} Unlocked`;
 
 export const DISCARD_PILE = "Extra Discard Pile";
 export const HAND_SIZE = "Hand Size Upgrade";
-export const SKIPBO_CARD = "Skip-Bo Card";
+export const BO_CARD = "Bo Card";
 export const STOCK_SHRINK = "Stockpile Shrink";
-export const POWER_ITEMS = [DISCARD_PILE, HAND_SIZE, SKIPBO_CARD, STOCK_SHRINK];
+export const POWER_ITEMS = [DISCARD_PILE, HAND_SIZE, BO_CARD, STOCK_SHRINK];
 
 export const STACKED_STOCK = "Stacked Stockpile";
 export const LOCKED_DISCARD = "Locked Discard";
@@ -27,13 +27,13 @@ export const BASE_HAND_SIZE = 5;
 export const SHRINK_STEP = 2;
 export const MIN_STOCK = 5;
 export const STACK_STEP = 3;
-export const POWER_CAPS = { [DISCARD_PILE]: 2, [HAND_SIZE]: 2, [SKIPBO_CARD]: 4, [STOCK_SHRINK]: 3 };
+export const POWER_CAPS = { [DISCARD_PILE]: 2, [HAND_SIZE]: 2, [BO_CARD]: 4, [STOCK_SHRINK]: 3 };
 
 export const ITEM_NAME_TO_ID = {
   ...Object.fromEntries(Array.from({ length: TABLE_COUNT }, (_, i) => [tableUnlock(i + 1), i + 1])),
   [DISCARD_PILE]: 50,
   [HAND_SIZE]: 51,
-  [SKIPBO_CARD]: 52,
+  [BO_CARD]: 52,
   [STOCK_SHRINK]: 53,
   [STACKED_STOCK]: 60,
   [LOCKED_DISCARD]: 61,

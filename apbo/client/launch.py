@@ -6,7 +6,7 @@ import colorama
 from CommonClient import get_base_parser, handle_url_arg
 
 
-def launch_skipbo_client(*args: Sequence[str]) -> None:
+def launch_bo_client(*args: Sequence[str]) -> None:
     from .context import main
 
     parser = get_base_parser()

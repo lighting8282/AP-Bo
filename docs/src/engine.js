@@ -1,9 +1,9 @@
-// The Skip-Bo table. A line-for-line port of skipbo/game/engine.py; the
+// The AP Bo table. A line-for-line port of apbo/game/engine.py; the
 // crosscheck test replays Python games through it and compares every event.
 //
 // A move source is ["hand", index], ["stock", 0] or ["discard", pile].
 
-import { MAX_RANK, WILD, cardName, shuffledDeck } from "./cards.js?v=040ed05b";
+import { MAX_RANK, WILD, cardName, shuffledDeck } from "./cards.js?v=e59d38d1";
 
 export const BUILD_PILES = 4;
 export const MAX_DISCARD_PILES = 4;

@@ -1,4 +1,4 @@
-"""A Skip-Bo tab for the Archipelago client window.
+"""An AP Bo tab for the Archipelago client window.
 
 Play is click-to-select, click-to-place: pick a source (a hand card, your
 stockpile, or a discard pile's top), and the build piles it fits light up;
@@ -40,7 +40,7 @@ from ..game.tables import TABLES
 from .session import HUMAN
 
 if TYPE_CHECKING:
-    from .context import SkipBoContext
+    from .context import BoContext
 
 CARD_H = 104
 CARD_W = CARD_H * 2 // 3
@@ -110,8 +110,8 @@ def caption(text: str, height: int = 18, size: str = "12sp") -> Label:
     return lab
 
 
-class SkipBoView(BoxLayout):
-    def __init__(self, manager: "SkipBoManager", **kwargs) -> None:
+class BoView(BoxLayout):
+    def __init__(self, manager: "BoManager", **kwargs) -> None:
         super().__init__(orientation="horizontal", padding=6, spacing=8, **kwargs)
         self.manager = manager
         self.selected: tuple[str, int] | None = None
@@ -284,7 +284,7 @@ class SkipBoView(BoxLayout):
             f"[b]{s.goal_text}[/b]    won {s.stats.games_won}/{s.stats.games_played} games    "
             f"stockpile cards {s.stats.stock_played}    build piles {s.stats.piles}")
         items = (f"discard piles [b]{s.discard_piles}[/b]   hand [b]{s.hand_size}[/b]   "
-                 f"Skip-Bo cards [b]{s.bonus_wilds}[/b]   shrinks [b]{s.count(STOCK_SHRINK)}[/b]"
+                 f"Bo cards [b]{s.bonus_wilds}[/b]   shrinks [b]{s.count(STOCK_SHRINK)}[/b]"
                  f"   power {s.power}")
         consumables = f"   mulligans {s.pending(MULLIGAN)}   spare wilds {s.pending(SPARE_WILD)}"
         self.subheader.text = items + consumables
@@ -486,13 +486,13 @@ def s_turn(t) -> bool:
     return t.state is State.PLAYING and t.current == HUMAN
 
 
-class SkipBoManager(GameManager):
+class BoManager(GameManager):
     base_title = f"Archipelago {GAME_NAME} Client"
-    ctx: "SkipBoContext"
+    ctx: "BoContext"
 
     def build(self) -> Layout:
         container = super().build()
-        self.game_view = SkipBoView(self)
-        self.game_tab = self.add_client_tab("Skip-Bo", self.game_view)
+        self.game_view = BoView(self)
+        self.game_tab = self.add_client_tab("AP Bo", self.game_view)
         Clock.schedule_interval(lambda _dt: self.game_view.refresh(), 1 / 4)
         return container

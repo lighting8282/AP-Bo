@@ -19,7 +19,7 @@ from .data import (
 from .options import Goal
 
 if TYPE_CHECKING:
-    from .world import SkipBoWorld
+    from .world import BoWorld
 
 #: Power needed to *win* at each table. Base win rates (no items): 1, 2, 4
 #: are 85%+, 3 and 6 are ~45%, 5, 7, 8 ~30%, 9 and 10 ~25% with a much
@@ -46,7 +46,7 @@ def tier_requirement(table: int, tier: str) -> Rule | None:
     return power(WIN_POWER[table] + DOMINANT_EXTRA)
 
 
-def set_all_rules(world: SkipBoWorld) -> None:
+def set_all_rules(world: BoWorld) -> None:
     for t in range(1, TABLE_COUNT + 1):
         world.set_rule(world.get_entrance(f"Menu to Table {t}"), Has(TABLE_UNLOCK.format(t)))
         for tier in world.tiers:

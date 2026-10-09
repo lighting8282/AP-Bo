@@ -8,7 +8,7 @@ from __future__ import annotations
 
 #: The Archipelago game identifier. archipelago.json and the docs filename
 #: carry their own copies; test_data checks they agree.
-GAME_NAME = "AP_SkipBo"
+GAME_NAME = "AP_Bo"
 
 #: Kept as a literal so this module stays dependency-free; test_data asserts
 #: it matches game.tables.
@@ -18,13 +18,13 @@ TABLE_UNLOCK = "Table {} Unlocked"
 
 DISCARD_PILE = "Extra Discard Pile"
 HAND_SIZE = "Hand Size Upgrade"
-SKIPBO_CARD = "Skip-Bo Card"
+BO_CARD = "Bo Card"
 STOCK_SHRINK = "Stockpile Shrink"
 
 #: The four items that make a table winnable. Logic counts them together:
 #: measured, each is worth roughly the same to the win rate, so asking for
 #: "any N of these" is honest and gives fill far more freedom than naming one.
-POWER_ITEMS = [DISCARD_PILE, HAND_SIZE, SKIPBO_CARD, STOCK_SHRINK]
+POWER_ITEMS = [DISCARD_PILE, HAND_SIZE, BO_CARD, STOCK_SHRINK]
 
 STACKED_STOCK = "Stacked Stockpile"
 LOCKED_DISCARD = "Locked Discard"
@@ -50,13 +50,13 @@ MIN_STOCK = 5
 STACK_STEP = 3
 
 #: Hard caps on how many copies of each power item can be useful.
-POWER_CAPS = {DISCARD_PILE: 2, HAND_SIZE: 2, SKIPBO_CARD: 4, STOCK_SHRINK: 3}
+POWER_CAPS = {DISCARD_PILE: 2, HAND_SIZE: 2, BO_CARD: 4, STOCK_SHRINK: 3}
 
 ITEM_NAME_TO_ID = {
     **{TABLE_UNLOCK.format(t): t for t in range(1, TABLE_COUNT + 1)},
     DISCARD_PILE: 50,
     HAND_SIZE: 51,
-    SKIPBO_CARD: 52,
+    BO_CARD: 52,
     STOCK_SHRINK: 53,
     STACKED_STOCK: 60,
     LOCKED_DISCARD: 61,

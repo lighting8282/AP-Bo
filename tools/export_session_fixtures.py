@@ -19,16 +19,16 @@ import types
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
-# Import skipbo.client.session without skipbo/__init__.py, which needs an
+# Import apbo.client.session without apbo/__init__.py, which needs an
 # Archipelago checkout: register an empty package and let the relative
 # imports resolve inside it.
-pkg = types.ModuleType("skipbo")
-pkg.__path__ = [str(ROOT / "skipbo")]
-sys.modules["skipbo"] = pkg
+pkg = types.ModuleType("apbo")
+pkg.__path__ = [str(ROOT / "apbo")]
+sys.modules["apbo"] = pkg
 
-data = importlib.import_module("skipbo.data")
-tables = importlib.import_module("skipbo.game.tables")
-session_mod = importlib.import_module("skipbo.client.session")
+data = importlib.import_module("apbo.data")
+tables = importlib.import_module("apbo.game.tables")
+session_mod = importlib.import_module("apbo.client.session")
 sys.path.insert(0, str(ROOT / "tools"))
 from export_traces import RecordingRandom  # noqa: E402
 
@@ -44,7 +44,7 @@ def configs(rng: random.Random) -> list[dict]:
     out = []
     for _ in range(150):
         items = random_items(rng)
-        s = session_mod.SkipBoSession({}, random.Random(0))
+        s = session_mod.BoSession({}, random.Random(0))
         s.set_items(items)
         for name in data.TRAPS + data.FILLERS:
             if rng.random() < 0.4:
@@ -67,7 +67,7 @@ def earned(rng: random.Random) -> list[dict]:
     for _ in range(200):
         slot = {"goal": rng.randint(0, 2), "games_to_win": rng.randint(3, 20),
                 "checks_per_table": rng.randint(1, 3), "store_slots": rng.randint(0, 8)}
-        s = session_mod.SkipBoSession(slot, random.Random(0))
+        s = session_mod.BoSession(slot, random.Random(0))
         st = s.stats
         st.games_won = rng.randint(0, 25)
         st.games_played = st.games_won + rng.randint(0, 10)
@@ -109,7 +109,7 @@ def starts(rng: random.Random) -> list[dict]:
         items = random_items(rng) + [data.TABLE_UNLOCK.format(t) for t in range(1, 11)]
         table = rng.randint(1, 10)
         rec = RecordingRandom(seed)
-        s = session_mod.SkipBoSession({}, rec)
+        s = session_mod.BoSession({}, rec)
         s.set_items(items)
         t = s.start(table)
         out.append({

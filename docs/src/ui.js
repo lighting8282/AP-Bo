@@ -6,13 +6,13 @@
 // again sends it to the first pile it fits. A selected hand card plus a tap
 // on one of your discard piles discards it and ends the turn.
 
-import { WILD, cardFile, cardName } from "./cards.js?v=040ed05b";
+import { WILD, cardFile, cardName } from "./cards.js?v=e59d38d1";
 import {
   MULLIGAN, SPARE_WILD, STOCK_SHRINK, STORE_PRICES, TABLES, TIERS, describeTable,
-} from "./data.js?v=040ed05b";
-import { BUILD_PILES, MAX_DISCARD_PILES, PLAYING, WON } from "./engine.js?v=040ed05b";
-import { HUMAN } from "./session.js?v=040ed05b";
-import { SkipBoClient } from "./client.js?v=040ed05b";
+} from "./data.js?v=e59d38d1";
+import { BUILD_PILES, MAX_DISCARD_PILES, PLAYING, WON } from "./engine.js?v=e59d38d1";
+import { HUMAN } from "./session.js?v=e59d38d1";
+import { BoClient } from "./client.js?v=e59d38d1";
 
 const $ = (id) => document.getElementById(id);
 const el = (tag, cls, text) => {
@@ -30,7 +30,7 @@ const ui = {
   eventGame: -1,
 };
 
-const client = new SkipBoClient({
+const client = new BoClient({
   onUpdate: () => render(),
   onLog: (text) => log(text, "sys"),
   onMessage: (text) => log(text, "room"),
@@ -274,7 +274,7 @@ function renderSummary(s) {
   add(`won <b>${s.stats.gamesWon}</b>/${s.stats.gamesPlayed}`);
   add(`discard piles <b>${s.discardPiles}</b>`);
   add(`hand <b>${s.handSize}</b>`);
-  add(`Skip-Bo cards <b>${s.bonusWilds}</b>`);
+  add(`Bo cards <b>${s.bonusWilds}</b>`);
   add(`shrinks <b>${s.count(STOCK_SHRINK)}</b>`);
   if (s.pending(MULLIGAN)) add(`mulligans <b>${s.pending(MULLIGAN)}</b>`);
   if (s.pending(SPARE_WILD)) add(`spare wilds <b>${s.pending(SPARE_WILD)}</b>`);
@@ -493,8 +493,8 @@ $("connect").addEventListener("submit", async (event) => {
   }
   // The published page is HTTPS, which can only open wss:// sockets.
   if (!/^wss?:\/\//.test(url)) url = `${location.protocol === "https:" ? "wss" : "ws"}://${url}`;
-  remember("skipbo_url", $("url").value.trim());
-  remember("skipbo_slot", slot);
+  remember("apbo_url", $("url").value.trim());
+  remember("apbo_slot", slot);
   $("connect-button").disabled = true;
   $("status").textContent = "connecting...";
   try {
@@ -528,8 +528,8 @@ $("say").addEventListener("submit", (event) => {
   client.client.messages.say(text).catch((err) => log(err.message, "sys"));
   $("say-text").value = "";
 });
-$("speed").value = recall("skipbo_speed") ?? "350";
-$("speed").addEventListener("change", () => remember("skipbo_speed", $("speed").value));
+$("speed").value = recall("apbo_speed") ?? "350";
+$("speed").addEventListener("change", () => remember("apbo_speed", $("speed").value));
 $("actions").addEventListener("click", (event) => {
   const button = event.target.closest("button[data-act]");
   if (button && !button.disabled) act(button.dataset.act);
@@ -559,6 +559,6 @@ document.addEventListener("keydown", (event) => {
 
 // Prefill, and accept ?server=...&slot=... links (e.g. from a room page).
 const params = new URLSearchParams(location.search);
-$("url").value = params.get("server") ?? recall("skipbo_url") ?? $("url").value;
-$("slot").value = params.get("slot") ?? recall("skipbo_slot") ?? "";
+$("url").value = params.get("server") ?? recall("apbo_url") ?? $("url").value;
+$("slot").value = params.get("slot") ?? recall("apbo_slot") ?? "";
 render();

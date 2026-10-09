@@ -1,14 +1,14 @@
 import random
 import unittest
 
-from ..client.session import HUMAN, SkipBoSession, Stats
+from ..client.session import HUMAN, BoSession, Stats
 from ..data import LOCATION_NAME_TO_ID
 from ..game import ai
 from ..game.engine import Seat, State, Table
 
 
-def session(**slot) -> SkipBoSession:
-    s = SkipBoSession({"checks_per_table": 3, **slot}, random.Random(5))
+def session(**slot) -> BoSession:
+    s = BoSession({"checks_per_table": 3, **slot}, random.Random(5))
     s.set_items(["Table 1 Unlocked", "Table 3 Unlocked"])
     return s
 
@@ -68,7 +68,7 @@ class TestSession(unittest.TestCase):
 
     def test_power_items_change_the_deal(self) -> None:
         s = session()
-        s.set_items(["Table 1 Unlocked", "Skip-Bo Card", "Skip-Bo Card", "Hand Size Upgrade",
+        s.set_items(["Table 1 Unlocked", "Bo Card", "Bo Card", "Hand Size Upgrade",
                      "Stockpile Shrink", "Extra Discard Pile"])
         t = s.start(1)
         me = t.seats[HUMAN]
@@ -88,7 +88,7 @@ class TestSession(unittest.TestCase):
             self.assertIsNone(Stats.from_payload(junk))
 
     def test_tiers_respect_checks_per_table(self) -> None:
-        s = SkipBoSession({"checks_per_table": 1}, random.Random(1))
+        s = BoSession({"checks_per_table": 1}, random.Random(1))
         s.stats.tables_won.add(1)
         self.assertNotIn(LOCATION_NAME_TO_ID["Table 1 - Won"], s.earned())
 

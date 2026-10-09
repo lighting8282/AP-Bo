@@ -1,6 +1,6 @@
 """End-to-end against a running server: connect, play, see checks land.
 
-    <AP venv python> tests/live_check.py ws://localhost:38299 SkipBo1
+    <AP venv python> tests/live_check.py ws://localhost:38299 Bo1
 """
 
 import asyncio
@@ -15,7 +15,7 @@ import ModuleUpdate  # noqa: E402
 ModuleUpdate.update_ran = True
 
 from CommonClient import server_loop  # noqa: E402
-from worlds.skipbo.client.context import SkipBoContext  # noqa: E402
+from worlds.apbo.client.context import BoContext  # noqa: E402
 
 
 async def wait_for(cond, timeout=15.0):
@@ -27,10 +27,10 @@ async def wait_for(cond, timeout=15.0):
 
 
 async def main(url: str, name: str) -> int:
-    ctx = SkipBoContext(url, None)
+    ctx = BoContext(url, None)
     ctx.auth = name
     ctx.server_task = asyncio.create_task(server_loop(ctx))
-    ctx.client_loop = asyncio.create_task(ctx.skipbo_loop())
+    ctx.client_loop = asyncio.create_task(ctx.bo_loop())
     ok = await wait_for(lambda: ctx.restore_state == "done" and ctx.session.unlocked_tables)
     print("connected + restored:", ok, "tables", sorted(ctx.session.unlocked_tables))
     missing_before = len(ctx.missing_locations)

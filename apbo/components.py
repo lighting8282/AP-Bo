@@ -4,9 +4,9 @@ from .data import GAME_NAME
 
 
 def run_client(*args: str) -> None:
-    from .client.launch import launch_skipbo_client
+    from .client.launch import launch_bo_client
 
-    launch(launch_skipbo_client, name=f"{GAME_NAME} Client", args=args)
+    launch(launch_bo_client, name=f"{GAME_NAME} Client", args=args)
 
 
 components.append(

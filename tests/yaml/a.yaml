@@ -1,6 +1,6 @@
-name: SkipBo1
-game: AP_SkipBo
-AP_SkipBo:
+name: Bo1
+game: AP_Bo
+AP_Bo:
   goal: table_ten
   checks_per_table: 3
   trap_chance: 30

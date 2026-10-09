@@ -1,15 +1,15 @@
-# AP_SkipBo
+# AP_Bo
 
-Skip-Bo against computer opponents, for Archipelago. Items unlock tables and make you
+AP Bo is a stockpile card game against computer opponents, for Archipelago. Items unlock tables and make you
 stronger; winning, finishing build piles and playing stockpile cards send checks.
 
-- **Download:** [latest release](https://github.com/lighting8282/Skip_Bo-Implementation/releases/latest)
-  (`skipbo.apworld` and a template `AP_SkipBo.yaml`). Needs Archipelago 0.6.7 or newer.
-- **Play in the browser:** https://lighting8282.github.io/Skip_Bo-Implementation/ (works on phones)
+- **Download:** [latest release](https://github.com/lighting8282/AP-Bo/releases/latest)
+  (`apbo.apworld` and a template `AP_Bo.yaml`). Needs Archipelago 0.6.7 or newer.
+- **Play in the browser:** https://lighting8282.github.io/AP-Bo/ (works on phones)
 
 ## The game
 
-Standard Skip-Bo. The deck has 162 cards: twelve each of 1-12, plus 18 wild Skip-Bo cards.
+The deck has 162 cards: twelve each of 1-12, plus 18 wild Bo cards.
 
 - **Build piles:** four shared piles, each built from 1 up to 12. A wild counts as
   whatever number the pile needs next. A pile that reaches 12 is set aside, and set-aside
@@ -21,8 +21,8 @@ Standard Skip-Bo. The deck has 162 cards: twelve each of 1-12, plus 18 wild Skip
 
 ## How to play it
 
-- **Desktop client:** put `skipbo.apworld` in `custom_worlds`, open **AP_SkipBo Client**
-  from the Launcher, connect, and use the **Skip-Bo** tab.
+- **Desktop client:** put `apbo.apworld` in `custom_worlds`, open **AP_Bo Client**
+  from the Launcher, connect, and use the **AP Bo** tab.
 - **Web client:** use the link above. *Just play* plays without a server.
   - It can only connect to secure (`wss://`) rooms, such as archipelago.gg. A room hosted
     on your own PC needs the desktop client or a locally served copy of the page.
@@ -67,7 +67,7 @@ Each table is unlocked by its own item.
 | Table 1-10 Unlocked | one each, minus your starting tables | Lets you sit at that table |
 | Extra Discard Pile | 0-2 (default 2) | +1 discard pile. You start with 2; max 4. |
 | Hand Size Upgrade | 0-2 (default 2) | +1 hand size. You start with 5; max 7. |
-| Skip-Bo Card | 0-4 (default 3) | One wild dealt into your hand at the start of every game, on top of your hand size |
+| Bo Card | 0-4 (default 3) | One wild dealt into your hand at the start of every game, on top of your hand size |
 | Stockpile Shrink | 0-3 (default 3) | Your stockpile has 2 fewer cards, down to a minimum of 5. Opponents are unaffected. |
 | AP Point | as many as the store needs | Spent in the store |
 
@@ -142,7 +142,7 @@ milestones, not only when a game ends.
 | store_slots | 0-8 | 4 |
 | discard_pile_items | 0-2 | 2 |
 | hand_size_items | 0-2 | 2 |
-| skipbo_card_items | 0-4 | 3 |
+| bo_card_items | 0-4 | 3 |
 | stock_shrink_items | 0-3 | 3 |
 | trap_chance | 0-100 | 10 |
 | death_link | on/off | off |
@@ -186,4 +186,4 @@ Both the desktop client and the web client have these.
 
 ---
 
-Skip-Bo is a trademark of Mattel. This is an unofficial fan project, not affiliated with or endorsed by Mattel.
+AP Bo uses the rules of the card game Skip-Bo, a trademark of Mattel. This is an unofficial fan project, not affiliated with or endorsed by Mattel.

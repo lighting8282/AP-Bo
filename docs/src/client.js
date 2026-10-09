@@ -1,14 +1,14 @@
-// Archipelago wiring for the browser client. Mirrors skipbo/client/context.py:
+// Archipelago wiring for the browser client. Mirrors apbo/client/context.py:
 // the session holds the game, this holds the socket, the UI reads both.
 //
 // Same save key and payload as the desktop client, so the two can take turns
 // on one slot. Nothing is saved until the restore has landed, or the empty
 // stats built on connect would overwrite the real ones.
 
-import { Client } from "../node_modules/archipelago.js/dist/index.js?v=040ed05b";
+import { Client } from "../node_modules/archipelago.js/dist/index.js?v=e59d38d1";
 
-import { DISCARD_PILE, GAME_NAME, TABLE_COUNT, tableUnlock } from "./data.js?v=040ed05b";
-import { GOAL_ALL_TABLES, SkipBoSession, Stats, resultText } from "./session.js?v=040ed05b";
+import { DISCARD_PILE, GAME_NAME, TABLE_COUNT, tableUnlock } from "./data.js?v=e59d38d1";
+import { GOAL_ALL_TABLES, BoSession, Stats, resultText } from "./session.js?v=e59d38d1";
 
 /** Free play is the printed game: every table open, four discard piles. */
 const FREE_PLAY_SLOT = Object.freeze({ goal: GOAL_ALL_TABLES, checks_per_table: 3, store_slots: 0 });
@@ -16,12 +16,12 @@ const FREE_PLAY_ITEMS = [
   ...Array.from({ length: TABLE_COUNT }, (_, i) => tableUnlock(i + 1)),
   DISCARD_PILE, DISCARD_PILE,
 ];
-const FREE_PLAY_KEY = "skipbo_free_play";
+const FREE_PLAY_KEY = "apbo_free_play";
 
-export class SkipBoClient {
+export class BoClient {
   constructor({ onUpdate = () => {}, onLog = () => {}, onMessage = () => {} } = {}) {
     this.client = new Client();
-    this.session = new SkipBoSession();
+    this.session = new BoSession();
     this.onUpdate = onUpdate;
     this.onLog = onLog;
     this.onMessage = onMessage;
@@ -66,7 +66,7 @@ export class SkipBoClient {
 
   get saveKey() {
     const self = this.#self();
-    return `skipbo_game_${self?.team ?? 0}_${self?.slot ?? 0}`;
+    return `apbo_game_${self?.team ?? 0}_${self?.slot ?? 0}`;
   }
 
   // -- free play -------------------------------------------------------------
@@ -74,7 +74,7 @@ export class SkipBoClient {
     this.connected = false;
     this.offline = true;
     this.goalSent = false;
-    this.session = new SkipBoSession(FREE_PLAY_SLOT);
+    this.session = new BoSession(FREE_PLAY_SLOT);
     this.session.setItems(FREE_PLAY_ITEMS);
     this.session.autoStock = this.autoStockPref;
     if (fresh) this.#writeLocal(null);
@@ -113,7 +113,7 @@ export class SkipBoClient {
     if (password) options.password = password;
     const slotData = await this.client.login(url, slotName, GAME_NAME, options);
     this.offline = false;
-    this.session = new SkipBoSession(slotData);
+    this.session = new BoSession(slotData);
     this.session.autoStock = this.autoStockPref;
     this.session.reported = new Set(this.client.room.checkedLocations);
     this.goalSent = false;
@@ -177,7 +177,7 @@ export class SkipBoClient {
       changed = true;
       if (!result.won && this.connected && s.deathLink && !this.killed) {
         const name = this.#self()?.name ?? "A player";
-        this.client.deathLink.sendDeathLink(name, "lost at Skip-Bo");
+        this.client.deathLink.sendDeathLink(name, "lost at AP Bo");
         this.onLog("DeathLink sent.");
       }
       this.killed = false;
@@ -207,7 +207,7 @@ export class SkipBoClient {
   /** The player's Auto-stock choice, kept across games and reconnects. */
   get autoStockPref() {
     try {
-      return localStorage.getItem("skipbo_auto_stock") === "1";
+      return localStorage.getItem("apbo_auto_stock") === "1";
     } catch {
       return false;
     }
@@ -216,7 +216,7 @@ export class SkipBoClient {
   setAutoStock(on) {
     this.session.autoStock = on;
     try {
-      localStorage.setItem("skipbo_auto_stock", on ? "1" : "0");
+      localStorage.setItem("apbo_auto_stock", on ? "1" : "0");
     } catch { /* fine */ }
     if (on && this.session.myTurn) this.session.afterHumanAction();
     this.afterAction();

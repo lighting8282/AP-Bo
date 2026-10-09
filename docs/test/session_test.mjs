@@ -4,7 +4,7 @@
 import { readFileSync } from "node:fs";
 
 import { ITEM_NAME_TO_ID, LOCATION_NAME_TO_ID, TABLES, describeTable } from "../src/data.js";
-import { SkipBoSession, Stats } from "../src/session.js";
+import { BoSession, Stats } from "../src/session.js";
 import { ScriptedRng } from "./scripted_rng.mjs";
 
 const fx = JSON.parse(readFileSync(new URL("./session_fixtures.json", import.meta.url), "utf8"));
@@ -25,7 +25,7 @@ for (const [n, t] of Object.entries(fx.tables)) {
 }
 
 fx.configs.forEach((c, i) => {
-  const s = new SkipBoSession({});
+  const s = new BoSession({});
   s.setItems(c.items);
   s.stats.trapsUsed = c.trapsUsed;
   s.stats.fillersUsed = c.fillersUsed;
@@ -43,7 +43,7 @@ fx.configs.forEach((c, i) => {
 });
 
 fx.earned.forEach((e, i) => {
-  const s = new SkipBoSession(e.slot);
+  const s = new BoSession(e.slot);
   s.stats = Stats.fromPayload(e.payload);
   same([...s.earned()].sort((a, b) => a - b), e.earned, `earned ${i}`);
   same([s.goalMet, s.goalText], [e.goalMet, e.goalText], `goal ${i}`);
@@ -56,7 +56,7 @@ fx.payloads.forEach((p, i) => {
 });
 
 fx.starts.forEach((st, i) => {
-  const s = new SkipBoSession({}, new ScriptedRng(st.rng));
+  const s = new BoSession({}, new ScriptedRng(st.rng));
   s.setItems(st.items);
   const t = s.start(st.table);
   same({

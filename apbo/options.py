@@ -67,10 +67,10 @@ class HandSizeItems(Range):
     default = 2
 
 
-class SkipBoCardItems(Range):
-    """Each item deals you a wild Skip-Bo card at the start of every game,
+class BoCardItems(Range):
+    """Each item deals you a wild Bo card at the start of every game,
     on top of your hand size."""
-    display_name = "Skip-Bo Card Items"
+    display_name = "Bo Card Items"
     range_start = 0
     range_end = 4
     default = 3
@@ -108,31 +108,31 @@ class StoreSlots(Range):
     default = 4
 
 
-class SkipBoDeathLink(DeathLink):
+class BoDeathLink(DeathLink):
     """A death is a lost game. When someone else dies, your current game is
     forfeited; when you lose a game, everyone linked dies."""
 
 
 @dataclass
-class SkipBoOptions(PerGameCommonOptions):
+class BoOptions(PerGameCommonOptions):
     goal: Goal
     games_to_win: GamesToWin
     starting_tables: StartingTables
     checks_per_table: ChecksPerTable
     discard_pile_items: DiscardPileItems
     hand_size_items: HandSizeItems
-    skipbo_card_items: SkipBoCardItems
+    bo_card_items: BoCardItems
     stock_shrink_items: StockShrinkItems
     store_slots: StoreSlots
     trap_chance: TrapChance
-    death_link: SkipBoDeathLink
+    death_link: BoDeathLink
 
 
 option_groups = [
     OptionGroup("Goal", [Goal, GamesToWin, StartingTables, ChecksPerTable, StoreSlots]),
-    OptionGroup("Power Items", [DiscardPileItems, HandSizeItems, SkipBoCardItems,
+    OptionGroup("Power Items", [DiscardPileItems, HandSizeItems, BoCardItems,
                                 StockShrinkItems]),
-    OptionGroup("Extras", [TrapChance, SkipBoDeathLink]),
+    OptionGroup("Extras", [TrapChance, BoDeathLink]),
 ]
 
 option_presets = {

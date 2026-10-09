@@ -1,7 +1,7 @@
 """Measure win rates per table at no/some/all power items (see game/tables.py)."""
 import sys, random, time
 import pathlib
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "skipbo"))
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "apbo"))
 from game.engine import Table, Seat, State
 from game import ai
 def run(opp, levels, stock, opp_stock, hand=5, slots=4, bonus=0, me="hard", n=200, seed=1):

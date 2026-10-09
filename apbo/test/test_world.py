@@ -3,10 +3,10 @@ import pathlib
 
 from ..data import GAME_NAME, ITEM_NAME_TO_ID, LOCATION_NAME_TO_ID, TABLE_COUNT
 from ..game.tables import TABLES
-from . import SkipBoTestBase
+from . import BoTestBase
 
 
-class TestDefault(SkipBoTestBase):
+class TestDefault(BoTestBase):
     def test_ids_unique(self) -> None:
         self.assertEqual(len(set(ITEM_NAME_TO_ID.values())), len(ITEM_NAME_TO_ID))
         self.assertEqual(len(set(LOCATION_NAME_TO_ID.values())), len(LOCATION_NAME_TO_ID))
@@ -24,12 +24,12 @@ class TestDefault(SkipBoTestBase):
         self.assertTrue(self.can_reach_location("Table 10 - Pile Completed"))
 
 
-class TestAllTablesDominant(SkipBoTestBase):
+class TestAllTablesDominant(BoTestBase):
     # Every power option at zero: generate_early must raise them back up.
     options = {"goal": 1, "checks_per_table": 3, "discard_pile_items": 0,
-               "hand_size_items": 0, "skipbo_card_items": 0, "stock_shrink_items": 0,
+               "hand_size_items": 0, "bo_card_items": 0, "stock_shrink_items": 0,
                "store_slots": 8, "starting_tables": 1, "trap_chance": 100}
 
 
-class TestQuick(SkipBoTestBase):
+class TestQuick(BoTestBase):
     options = {"goal": 2, "checks_per_table": 1, "starting_tables": 3, "store_slots": 8}

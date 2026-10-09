@@ -7,10 +7,10 @@ from BaseClasses import Region
 from .data import TABLE_COUNT
 
 if TYPE_CHECKING:
-    from .world import SkipBoWorld
+    from .world import BoWorld
 
 
-def create_and_connect_regions(world: SkipBoWorld) -> None:
+def create_and_connect_regions(world: BoWorld) -> None:
     def region(name: str) -> Region:
         r = Region(name, world.player, world.multiworld)
         world.multiworld.regions.append(r)

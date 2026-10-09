@@ -1,18 +1,18 @@
 // Items in, a dealt table and earned location IDs out. A port of
-// skipbo/client/session.py, with the same save payload, so the desktop client
+// apbo/client/session.py, with the same save payload, so the desktop client
 // and this page can take turns on one slot.
 
 import {
   AP_POINT, BASE_DISCARD_PILES, BASE_HAND_SIZE, DISCARD_PILE, GAMES_WON_MILESTONES, HAND_SIZE,
   LOCATION_NAME_TO_ID, LOCKED_DISCARD, MIN_STOCK, MULLIGAN, PILES_MILESTONES, RIVAL_WILD,
-  SHRINK_STEP, SKIPBO_CARD, SPARE_WILD, STACKED_STOCK, STACK_STEP, STOCK_PLAYED_MILESTONES,
+  SHRINK_STEP, BO_CARD, SPARE_WILD, STACKED_STOCK, STACK_STEP, STOCK_PLAYED_MILESTONES,
   STOCK_SHRINK, STORE_PRICES, TABLES, TABLE_COUNT, TIERS, gamesWonName, pilesName,
   stockPlayedName, storeGate, storeLocationName, tableLocationName, tableUnlock,
-} from "./data.js?v=040ed05b";
-import { WILD } from "./cards.js?v=040ed05b";
-import { autoplay, bestPlan, chooseDiscard, takeTurn } from "./ai.js?v=040ed05b";
-import { PLAYING, Seat, Table } from "./engine.js?v=040ed05b";
-import { Rng } from "./rng.js?v=040ed05b";
+} from "./data.js?v=e59d38d1";
+import { WILD } from "./cards.js?v=e59d38d1";
+import { autoplay, bestPlan, chooseDiscard, takeTurn } from "./ai.js?v=e59d38d1";
+import { PLAYING, Seat, Table } from "./engine.js?v=e59d38d1";
+import { Rng } from "./rng.js?v=e59d38d1";
 
 export const PAYLOAD_VERSION = 1;
 export const HUMAN = 0;
@@ -91,7 +91,7 @@ export function resultText(r) {
   return `Table ${r.table} was called with nobody out`;
 }
 
-export class SkipBoSession {
+export class BoSession {
   constructor(slotData = {}, rng = new Rng()) {
     this.goal = Number(slotData.goal ?? GOAL_TABLE_TEN);
     this.gamesToWin = Number(slotData.games_to_win ?? 10);
@@ -133,7 +133,7 @@ export class SkipBoSession {
 
   get handSize() { return BASE_HAND_SIZE + Math.min(2, this.count(HAND_SIZE)); }
 
-  get bonusWilds() { return Math.min(4, this.count(SKIPBO_CARD)); }
+  get bonusWilds() { return Math.min(4, this.count(BO_CARD)); }
 
   stockSize(table) {
     return Math.max(MIN_STOCK, TABLES[table].stock - SHRINK_STEP * Math.min(3, this.count(STOCK_SHRINK)));
@@ -145,7 +145,7 @@ export class SkipBoSession {
   }
 
   get power() {
-    return [DISCARD_PILE, HAND_SIZE, SKIPBO_CARD, STOCK_SHRINK].reduce((a, n) => a + this.count(n), 0);
+    return [DISCARD_PILE, HAND_SIZE, BO_CARD, STOCK_SHRINK].reduce((a, n) => a + this.count(n), 0);
   }
 
   // -- store ---------------------------------------------------------------

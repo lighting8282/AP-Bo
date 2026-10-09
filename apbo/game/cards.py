@@ -1,4 +1,4 @@
-"""Card model for Skip-Bo.
+"""Card model for AP Bo.
 
 A card is an int: 1-12 for the numbers, WILD (0) for the wild. Nothing else
 about a card matters to the rules -- the number cards have no suit -- so a
@@ -45,7 +45,7 @@ def card_filename(card: Card) -> str:
 
 def parse_card(text: str) -> Card:
     text = text.strip().upper()
-    if text in ("W", "WILD", "SB", "SKIP-BO", "SKIPBO"):
+    if text in ("W", "WILD", "BO"):
         return WILD
     value = int(text)
     if not MIN_RANK <= value <= MAX_RANK:

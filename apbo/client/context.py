@@ -1,8 +1,8 @@
-"""Archipelago client for AP_SkipBo.
+"""Archipelago client for AP_Bo.
 
 Every action is a command, and the GUI tab only ever calls commands, so typed
 play and clicked play are the same code path. Commands are synchronous while
-sending is async: checks are queued here and drained by skipbo_loop.
+sending is async: checks are queued here and drained by bo_loop.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ from ..data import GAME_NAME, MULLIGAN, SPARE_WILD, STORE_PRICES, TABLE_COUNT, s
 from ..game.cards import card_name
 from ..game.engine import BUILD_PILES, State
 from ..game.tables import TABLES
-from .session import HUMAN, SkipBoSession
+from .session import HUMAN, BoSession
 
 
 def parse_source(text: str):
@@ -31,7 +31,7 @@ def parse_source(text: str):
     raise ValueError(f"'{text}' is not a source -- use h1..h7, s, or d1..d4")
 
 
-def describe_table(session: SkipBoSession) -> list[str]:
+def describe_table(session: BoSession) -> list[str]:
     t = session.table
     lines = []
     builds = "  ".join(
@@ -51,8 +51,8 @@ def describe_table(session: SkipBoSession) -> list[str]:
     return lines
 
 
-class SkipBoCommandProcessor(ClientCommandProcessor):
-    ctx: SkipBoContext
+class BoCommandProcessor(ClientCommandProcessor):
+    ctx: BoContext
 
     def _try(self, fn, *args) -> bool:
         try:
@@ -169,7 +169,7 @@ class SkipBoCommandProcessor(ClientCommandProcessor):
         s = self.ctx.session
         self.output(s.goal_text)
         self.output(f"discard piles {s.discard_piles} | hand size {s.hand_size} | "
-                    f"Skip-Bo cards {s.bonus_wilds} | stockpile shrinks {s.count('Stockpile Shrink')}")
+                    f"Bo cards {s.bonus_wilds} | stockpile shrinks {s.count('Stockpile Shrink')}")
         self.output(f"mulligans {s.pending(MULLIGAN)} | spare wilds {s.pending(SPARE_WILD)}")
         st = s.stats
         self.output(f"games {st.games_played} played, {st.games_won} won | "
@@ -199,14 +199,14 @@ class SkipBoCommandProcessor(ClientCommandProcessor):
             self.output(f"Bought slot {n}.")
 
 
-class SkipBoContext(CommonContext):
+class BoContext(CommonContext):
     game = GAME_NAME
     items_handling = 0b111
-    command_processor = SkipBoCommandProcessor
+    command_processor = BoCommandProcessor
 
     def __init__(self, server_address: str | None = None, password: str | None = None) -> None:
         super().__init__(server_address, password)
-        self.session = SkipBoSession(rng=random.Random())
+        self.session = BoSession(rng=random.Random())
         self.pending_locations: list[int] = []
         self.goal_sent = False
         self.restore_state = "needed"
@@ -221,7 +221,7 @@ class SkipBoContext(CommonContext):
 
     @property
     def save_key(self) -> str:
-        return f"skipbo_game_{self.team}_{self.slot}"
+        return f"apbo_game_{self.team}_{self.slot}"
 
     async def disconnect(self, *args, **kwargs) -> None:
         self.session_ready = False
@@ -235,7 +235,7 @@ class SkipBoContext(CommonContext):
 
     def on_package(self, cmd: str, args: dict[str, Any]) -> None:
         if cmd == "Connected":
-            self.session = SkipBoSession(args.get("slot_data", {}), random.Random())
+            self.session = BoSession(args.get("slot_data", {}), random.Random())
             self.session.reported = set(self.checked_locations)
             self.goal_sent = False
             self.restore_state = "needed"
@@ -316,7 +316,7 @@ class SkipBoContext(CommonContext):
         s.forfeit()
         self.after_action()
 
-    async def skipbo_loop(self) -> None:
+    async def bo_loop(self) -> None:
         while not self.exit_event.is_set():
             # Authenticated, not merely connected: the server ignores a Get
             # sent before Connected, and the restore would then never land.
@@ -327,7 +327,7 @@ class SkipBoContext(CommonContext):
                 await self.update_death_link(self.session.death_link)
             if connected and self.death_link_pending:
                 self.death_link_pending = False
-                await self.send_death(f"{self.player_names.get(self.slot, 'A player')} lost at Skip-Bo.")
+                await self.send_death(f"{self.player_names.get(self.slot, 'A player')} lost at AP Bo.")
             if connected and self.restore_state == "needed":
                 self.restore_state = "requested"
                 await self.send_msgs([{"cmd": "Get", "keys": [self.save_key]}])
@@ -349,17 +349,17 @@ class SkipBoContext(CommonContext):
             await asyncio.sleep(0.1)
 
     def make_gui(self):
-        from .game_manager import SkipBoManager
-        return SkipBoManager
+        from .game_manager import BoManager
+        return BoManager
 
 
 async def main(args) -> None:
     from CommonClient import gui_enabled
 
-    ctx = SkipBoContext(args.connect, args.password)
+    ctx = BoContext(args.connect, args.password)
     ctx.auth = args.name
     ctx.server_task = asyncio.create_task(server_loop(ctx), name="server loop")
-    ctx.client_loop = asyncio.create_task(ctx.skipbo_loop(), name="skipbo loop")
+    ctx.client_loop = asyncio.create_task(ctx.bo_loop(), name="bo loop")
     if gui_enabled:
         ctx.run_gui()
     ctx.run_cli()

@@ -1,4 +1,4 @@
-"""Package skipbo/ as an installable .apworld.
+"""Package apbo/ as an installable .apworld.
 
 An .apworld is a zip holding one top-level directory named for the module,
 dropped into Archipelago's custom_worlds/. Everything in this project has so
@@ -7,7 +7,7 @@ machine and only against a source checkout -- this is what other people can
 actually install.
 
     python tools/build_apworld.py
-    python tools/build_apworld.py --verify dist/skipbo.apworld
+    python tools/build_apworld.py --verify dist/apbo.apworld
 
 Timestamps are fixed so two builds of the same source are byte-identical;
 otherwise every build looks like a change and you cannot tell whether a
@@ -23,8 +23,8 @@ import sys
 import zipfile
 
 PROJECT_ROOT = pathlib.Path(__file__).resolve().parent.parent
-PACKAGE = PROJECT_ROOT / "skipbo"
-MODULE = "skipbo"
+PACKAGE = PROJECT_ROOT / "apbo"
+MODULE = "apbo"
 
 #: Dev-only trees. Both reference apworlds ship neither, and the test suite
 #: needs Archipelago's own test framework, so it is no use to an installer.
@@ -34,24 +34,24 @@ EXCLUDED_SUFFIXES = {".pyc", ".pyo"}
 #: A build missing any of these is broken in a way that only shows up when
 #: somebody tries to generate with it.
 REQUIRED = [
-    "skipbo/__init__.py",
-    "skipbo/archipelago.json",
-    "skipbo/world.py",
-    "skipbo/data.py",
-    "skipbo/items.py",
-    "skipbo/locations.py",
-    "skipbo/options.py",
-    "skipbo/regions.py",
-    "skipbo/rules.py",
-    "skipbo/web_world.py",
-    "skipbo/components.py",
-    "skipbo/client/context.py",
-    "skipbo/client/session.py",
-    "skipbo/client/game_manager.py",
-    "skipbo/game/engine.py",
-    "skipbo/game/ai.py",
-    "skipbo/game/cards.py",
-    "skipbo/game/tables.py",
+    "apbo/__init__.py",
+    "apbo/archipelago.json",
+    "apbo/world.py",
+    "apbo/data.py",
+    "apbo/items.py",
+    "apbo/locations.py",
+    "apbo/options.py",
+    "apbo/regions.py",
+    "apbo/rules.py",
+    "apbo/web_world.py",
+    "apbo/components.py",
+    "apbo/client/context.py",
+    "apbo/client/session.py",
+    "apbo/client/game_manager.py",
+    "apbo/game/engine.py",
+    "apbo/game/ai.py",
+    "apbo/game/cards.py",
+    "apbo/game/tables.py",
 ]
 
 #: Fixed so the build is reproducible (zip stores 1980-01-01 as its epoch).
@@ -156,7 +156,7 @@ def verify(target: pathlib.Path) -> list[str]:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--out", default="dist/skipbo.apworld")
+    ap.add_argument("--out", default="dist/apbo.apworld")
     ap.add_argument("--verify", metavar="PATH", default=None,
                     help="verify an existing package instead of building")
     args = ap.parse_args()

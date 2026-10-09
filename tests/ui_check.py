@@ -1,4 +1,4 @@
-"""Visual and interaction check for the Skip-Bo client tab.
+"""Visual and interaction check for the AP Bo client tab.
 
 Kivy needs a real window, so this is not a unit test: it opens the client UI
 with a seeded session, dispatches real clicks through the widgets, takes a
@@ -20,10 +20,10 @@ import ModuleUpdate  # noqa: E402
 
 ModuleUpdate.update_ran = True
 
-OUT = sys.argv[1] if len(sys.argv) > 1 else "skipbo_ui.png"
+OUT = sys.argv[1] if len(sys.argv) > 1 else "apbo_ui.png"
 
-from worlds.skipbo.client.context import SkipBoContext  # noqa: E402
-from worlds.skipbo.client.session import HUMAN, SkipBoSession  # noqa: E402
+from worlds.apbo.client.context import BoContext  # noqa: E402
+from worlds.apbo.client.session import HUMAN, BoSession  # noqa: E402
 
 failures: list[str] = []
 
@@ -39,10 +39,10 @@ def frame_of(widget):
 
 
 async def main():
-    ctx = SkipBoContext(None, None)
-    ctx.session = SkipBoSession({"checks_per_table": 3, "store_slots": 4}, random.Random(11))
+    ctx = BoContext(None, None)
+    ctx.session = BoSession({"checks_per_table": 3, "store_slots": 4}, random.Random(11))
     ctx.session.set_items(["Table 1 Unlocked", "Table 3 Unlocked", "Table 7 Unlocked",
-                           "Skip-Bo Card", "Extra Discard Pile", "Mulligan", "Spare Wild",
+                           "Bo Card", "Extra Discard Pile", "Mulligan", "Spare Wild",
                            "AP Point", "AP Point"])
     ctx.restore_state = "done"
     ctx.run_gui()
@@ -72,7 +72,7 @@ async def main():
         dealt = list(s.table.seats[HUMAN].hand)
         view.btn_mulligan.dispatch("on_release")
         check(s.pending("Mulligan") == 0, "Mulligan button spends the mulligan")
-        check(s.table.seats[HUMAN].hand.count(0) >= 1, "granted Skip-Bo card survives the mulligan")
+        check(s.table.seats[HUMAN].hand.count(0) >= 1, "granted Bo card survives the mulligan")
         del dealt
 
         # Find a playable hand card, select it, and check the targets light up.

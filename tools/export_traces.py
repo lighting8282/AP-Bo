@@ -17,7 +17,7 @@ import random
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(ROOT / "skipbo"))
+sys.path.insert(0, str(ROOT / "apbo"))
 
 from game import ai  # noqa: E402
 from game.engine import Seat, Table  # noqa: E402

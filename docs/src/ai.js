@@ -1,10 +1,10 @@
-// Computer players and the Hint/Auto planner. A port of skipbo/game/ai.py
+// Computer players and the Hint/Auto planner. A port of apbo/game/ai.py
 // that has to agree with it move for move: the iteration order, the memo key
 // (zero counts included, as Python's Counter keeps them) and the strict
 // tie-breaking are all deliberate copies.
 
-import { MAX_RANK, WILD } from "./cards.js?v=040ed05b";
-import { BUILD_PILES, MAX_DISCARD_PILES, PLAYING } from "./engine.js?v=040ed05b";
+import { MAX_RANK, WILD } from "./cards.js?v=e59d38d1";
+import { BUILD_PILES, MAX_DISCARD_PILES, PLAYING } from "./engine.js?v=e59d38d1";
 
 export const DEPTH = { easy: 1, normal: 3, hard: 8 };
 export const NODE_LIMIT = 6000;

@@ -1,4 +1,4 @@
-"""The Skip-Bo table: rules only, no AI and no Archipelago.
+"""The AP Bo table: rules only, no AI and no Archipelago.
 
 Everything a seat can do goes through `play` and `discard`, and both check the
 rules before touching anything, so the human seat, the computer seats and the

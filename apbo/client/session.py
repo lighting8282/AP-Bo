@@ -18,7 +18,7 @@ from typing import Any
 from ..data import (
     BASE_DISCARD_PILES, BASE_HAND_SIZE, DISCARD_PILE, GAMES_WON_MILESTONES, HAND_SIZE,
     LOCATION_NAME_TO_ID, LOCKED_DISCARD, MIN_STOCK, MULLIGAN, PILES_MILESTONES, RIVAL_WILD,
-    SHRINK_STEP, SKIPBO_CARD, SPARE_WILD, STACK_STEP, STACKED_STOCK, STOCK_PLAYED_MILESTONES,
+    SHRINK_STEP, BO_CARD, SPARE_WILD, STACK_STEP, STACKED_STOCK, STOCK_PLAYED_MILESTONES,
     STOCK_SHRINK, STORE_PRICES, TABLE_COUNT, TABLE_UNLOCK, TIERS, AP_POINT, games_won_name,
     piles_name, stock_played_name, store_gate, store_location_name, table_location_name,
 )
@@ -117,7 +117,7 @@ class Result:
         return f"Table {self.table} was called with nobody out"
 
 
-class SkipBoSession:
+class BoSession:
     def __init__(self, slot_data: dict | None = None, rng: random.Random | None = None) -> None:
         slot_data = slot_data or {}
         self.goal = int(slot_data.get("goal", GOAL_TABLE_TEN))
@@ -166,7 +166,7 @@ class SkipBoSession:
 
     @property
     def bonus_wilds(self) -> int:
-        return min(4, self.count(SKIPBO_CARD))
+        return min(4, self.count(BO_CARD))
 
     def stock_size(self, table: int) -> int:
         return max(MIN_STOCK, TABLES[table].stock - SHRINK_STEP * min(3, self.count(STOCK_SHRINK)))
@@ -178,7 +178,7 @@ class SkipBoSession:
 
     @property
     def power(self) -> int:
-        return sum(self.count(n) for n in (DISCARD_PILE, HAND_SIZE, SKIPBO_CARD, STOCK_SHRINK))
+        return sum(self.count(n) for n in (DISCARD_PILE, HAND_SIZE, BO_CARD, STOCK_SHRINK))
 
     # -- store -------------------------------------------------------------
     @property

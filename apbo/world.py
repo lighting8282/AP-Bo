@@ -4,15 +4,15 @@ from typing import Any
 from worlds.AutoWorld import World
 
 from . import items, locations, regions, rules, web_world
-from . import options as skipbo_options
+from . import options as bo_options
 from .data import (
     GAME_NAME, ITEM_NAME_TO_ID, LOCATION_NAME_TO_ID, MILESTONE_NAMES, POWER_CAPS, POWER_ITEMS, TABLE_COUNT, TIERS, store_points,
 )
 
 
-class SkipBoWorld(World):
+class BoWorld(World):
     """
-    Skip-Bo is a card game of shared build piles: play 1 through 12 onto them,
+    AP Bo is a card game of shared build piles: play 1 through 12 onto them,
     from your hand, your discard piles and above all your stockpile, and the
     first player to empty their stockpile wins. Archipelago decides which
     tables you may sit at, and how many discard piles, cards in hand, wilds
@@ -20,10 +20,10 @@ class SkipBoWorld(World):
     """
 
     game = GAME_NAME
-    web = web_world.SkipBoWebWorld()
+    web = web_world.BoWebWorld()
 
-    options_dataclass = skipbo_options.SkipBoOptions
-    options: skipbo_options.SkipBoOptions
+    options_dataclass = bo_options.BoOptions
+    options: bo_options.BoOptions
 
     location_name_to_id = LOCATION_NAME_TO_ID
     item_name_to_id = ITEM_NAME_TO_ID
@@ -66,7 +66,7 @@ class SkipBoWorld(World):
     def create_items(self) -> None:
         items.create_all_items(self)
 
-    def create_item(self, name: str) -> items.SkipBoItem:
+    def create_item(self, name: str) -> items.BoItem:
         return items.create_item(self, name)
 
     def get_filler_item_name(self) -> str:
